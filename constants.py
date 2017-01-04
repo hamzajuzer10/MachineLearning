@@ -4,7 +4,7 @@
 
 
 #Machine Learning Summary Workbook
-workbook_name = 'MachineLearningSummary.xlsm'
+workbook_name = 'MachineLearningSummarySample.xlsm'
 training_sheet_name = 'Feature Analysis - Cleansed'
 actual_sheet_name = 'Actual Feature'
 
@@ -47,7 +47,7 @@ train_test_split = 0.9
 classifier = 'DecisionTree'
 
 # Should the training output be saved?
-save = True
+save = False
 
 #classifier parameters used:
 #Gaussian Bayes -
