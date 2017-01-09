@@ -5,4 +5,7 @@ import constants
 
 
 #run code here
-LabelPredictions.runTrainingAndTesting(constants.classifier, constants.save)
+if constants.run_type == 'training':
+    LabelPredictions.runTrainingAndTesting(constants.classifier, constants.save, constants.param_grid)
+elif constants.run_type == 'classification':
+    LabelPredictions.runClassification()

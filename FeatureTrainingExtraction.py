@@ -4,10 +4,10 @@
 #We will have 3 separate list of features, one for C,I,A
 #We will first extract the non-text features and then append the text features
 
-import ExcelExtraction
 import random
+import sys
 import constants
-
+import ExcelTrainingExtraction
 
 #Training and test labels - 12 categories
 trainingLabels=[]
@@ -41,25 +41,16 @@ CDavailabilityNonTextTestFeatures=[]
 RPavailabilityNonTextTestFeatures=[]
 RGavailabilityNonTextTestFeatures=[]
 
-#Training and test features (text) - split into 2 (Description, desc, and Additional Data types, adt)
-DescTrainingFeatures=[]
-DescTestFeatures=[]
-
-AdtTrainingFeatures=[]
-AdtTestFeatures=[]
-
-
-
 #Separate training and test features/ labels
 #e.g. Use 95% of data as training and 5% as test
 
 print 'separating classified training and test data...'
 
-random.shuffle(ExcelExtraction.dict_list)
-training_dict_list = ExcelExtraction.dict_list[:int(len(ExcelExtraction.dict_list)*constants.train_test_split)]
+random.shuffle(ExcelTrainingExtraction.dict_list)
+training_dict_list = ExcelTrainingExtraction.dict_list[:int(len(ExcelTrainingExtraction.dict_list)*constants.train_test_split)]
 print 'No. of training data samples: ', len(training_dict_list)
 
-test_dict_list = ExcelExtraction.dict_list[int(len(ExcelExtraction.dict_list)*constants.train_test_split):]
+test_dict_list = ExcelTrainingExtraction.dict_list[int(len(ExcelTrainingExtraction.dict_list)*constants.train_test_split):]
 print 'No. of test data samples: ', len(test_dict_list)
 
 #Extract training and test labels
@@ -99,29 +90,29 @@ for item in training_dict_list:
     RPAtemp=[]
     RGAtemp=[]
 
-    for feature in constants.FLconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['FLconfidentialityNonText_features']:
         FLCtemp.append(item[feature])
-    for feature in constants.CDconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['CDconfidentialityNonText_features']:
         CDCtemp.append(item[feature])
-    for feature in constants.RPconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['RPconfidentialityNonText_features']:
         RPCtemp.append(item[feature])
-    for feature in constants.RGconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['RGconfidentialityNonText_features']:
         RGCtemp.append(item[feature])
-    for feature in constants.FLintegrityNonText_features:
+    for feature in constants.nNonText_feature['FLintegrityNonText_features']:
         FLItemp.append(item[feature])
-    for feature in constants.CDintegrityNonText_features:
+    for feature in constants.nNonText_feature['CDintegrityNonText_features']:
         CDItemp.append(item[feature])
-    for feature in constants.RPintegrityNonText_features:
+    for feature in constants.nNonText_feature['RPintegrityNonText_features']:
         RPItemp.append(item[feature])
-    for feature in constants.RGintegrityNonText_features:
+    for feature in constants.nNonText_feature['RGintegrityNonText_features']:
         RGItemp.append(item[feature])
-    for feature in constants.FLavailabilityNonText_features:
+    for feature in constants.nNonText_feature['FLavailabilityNonText_features']:
         FLAtemp.append(item[feature])
-    for feature in constants.CDavailabilityNonText_features:
+    for feature in constants.nNonText_feature['CDavailabilityNonText_features']:
         CDAtemp.append(item[feature])
-    for feature in constants.RPavailabilityNonText_features:
+    for feature in constants.nNonText_feature['RPavailabilityNonText_features']:
         RPAtemp.append(item[feature])
-    for feature in constants.RGavailabilityNonText_features:
+    for feature in constants.nNonText_feature['RGavailabilityNonText_features']:
         RGAtemp.append(item[feature])
 
     FLconfidentialityNonTextTrainingFeatures.append(FLCtemp)
@@ -152,29 +143,29 @@ for item in test_dict_list:
     RPAtemp=[]
     RGAtemp=[]
 
-    for feature in constants.FLconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['FLconfidentialityNonText_features']:
         FLCtemp.append(item[feature])
-    for feature in constants.CDconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['CDconfidentialityNonText_features']:
         CDCtemp.append(item[feature])
-    for feature in constants.RPconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['RPconfidentialityNonText_features']:
         RPCtemp.append(item[feature])
-    for feature in constants.RGconfidentialityNonText_features:
+    for feature in constants.nNonText_feature['RGconfidentialityNonText_features']:
         RGCtemp.append(item[feature])
-    for feature in constants.FLintegrityNonText_features:
+    for feature in constants.nNonText_feature['FLintegrityNonText_features']:
         FLItemp.append(item[feature])
-    for feature in constants.CDintegrityNonText_features:
+    for feature in constants.nNonText_feature['CDintegrityNonText_features']:
         CDItemp.append(item[feature])
-    for feature in constants.RPintegrityNonText_features:
+    for feature in constants.nNonText_feature['RPintegrityNonText_features']:
         RPItemp.append(item[feature])
-    for feature in constants.RGintegrityNonText_features:
+    for feature in constants.nNonText_feature['RGintegrityNonText_features']:
         RGItemp.append(item[feature])
-    for feature in constants.FLavailabilityNonText_features:
+    for feature in constants.nNonText_feature['FLavailabilityNonText_features']:
         FLAtemp.append(item[feature])
-    for feature in constants.CDavailabilityNonText_features:
+    for feature in constants.nNonText_feature['CDavailabilityNonText_features']:
         CDAtemp.append(item[feature])
-    for feature in constants.RPavailabilityNonText_features:
+    for feature in constants.nNonText_feature['RPavailabilityNonText_features']:
         RPAtemp.append(item[feature])
-    for feature in constants.RGavailabilityNonText_features:
+    for feature in constants.nNonText_feature['RGavailabilityNonText_features']:
         RGAtemp.append(item[feature])
 
     FLconfidentialityNonTextTestFeatures.append(FLCtemp)
@@ -191,21 +182,5 @@ for item in test_dict_list:
     RGavailabilityNonTextTestFeatures.append(RGAtemp)
 
 
-#Extract training and test features (text)
-
-print 'extracting training and text features (text)...'
-
-for item in training_dict_list:
-    DescTrainingFeatures.append(item['AppInstanceDescription'])
-    AdtTrainingFeatures.append(item['AdditionalDataTypes'])
-
-
-for item in test_dict_list:
-    DescTestFeatures.append(item['AppInstanceDescription'])
-    AdtTestFeatures.append(item['AdditionalDataTypes'])
-
-
-
-
-
+#Extract training and test features (text) - TODO
 

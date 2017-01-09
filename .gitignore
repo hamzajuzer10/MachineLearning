@@ -1,0 +1,7 @@
+*.pyc
+Archive/*
+Outputs/*
+MachineLearningActual.xlsm
+MachineLearningTraining.xlsm
+*.xls
+

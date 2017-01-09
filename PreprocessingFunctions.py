@@ -4,6 +4,7 @@
 
 import numpy as np
 import sys
+import constants
 
 def label_transform(labelList):
     "Transform function takes a list of labels (VH,H,M,L) and transforms them into 1,2,3,4 "
@@ -26,7 +27,7 @@ def label_inv_transform(labelList):
     lookup = {3:'VH', 2:'H',1:'M',0:'L'}
 
     try:
-        transformedList = [[lookup[labelList[i][j]] for j in range(0,len(labelList[i]))] for i in range(0,len(labelList))]
+        transformedList = [lookup[labelList[i]] for i in range(0,len(labelList))]
     except KeyError, e:
         print 'unexpected predicted label values found...'
         print 'reason: "%s"' % str(e)
@@ -156,18 +157,17 @@ def nonTextFeature_transform(featureList):
               "Employee Threat Evidence":74,
               "Executive Succession Planning":75,
               "Bogdan Chirila":0,
-              "Warren M":1,
-              "Anupam Kakroo":2,
-              "Leo Barbaro":3,
-              "Varun Kashyap":4,
-              "Ben Segar":5,
-              "Aakesh Pattani":6,
-              "Laura Johnston":7,
-              "Leon Duffield":8,
-              "Jayme Metcalfe":9,
-              "Warren Moore":10,
-              "Hamza Juzer":11,
-              "Caroline Hicks":12}
+              "Anupam Kakroo":1,
+              "Leo Barbaro":2,
+              "Varun Kashyap":3,
+              "Ben Segar":4,
+              "Aakesh Pattani":5,
+              "Laura Johnston":6,
+              "Leon Duffield":7,
+              "Jayme Metcalfe":8,
+              "Warren Moore":9,
+              "Hamza Juzer":10,
+              "Caroline Hicks":11}
 
     try:
         transformedList = [[lookup[featureList[i][j]] for j in range(0,len(featureList[i]))] for i in range(0,len(featureList))]
@@ -183,25 +183,12 @@ def nonTextFeature_transform(featureList):
 def nonTextFeature_nvalues(FeatureDict):
     "Determines the number of unique values for each feature in the dictionary"
 
-    lookup = {'AppInstLvl4BusOrg':11,
-              'Region':7,
-             'BIA Rating':4,
-             'RiskFactor01':2,
-             'RiskFactor02':2,
-             'RiskFactor03':2,
-             'RiskFactor04':3,
-             'RiskFactor05':4,
-             'RiskFactor06':6,
-             'RiskFactor07':4,
-             'RiskFactor08':2,
-             'Category':76,
-             'Classification Owners':13}
 
     n_values = []
 
     for feature in FeatureDict:
         try:
-            n_values.append(lookup[feature])
+            n_values.append(constants.nValues_feature[feature])
         except KeyError, e:
             print 'unexpected features found to determine unique number of features...'
             print 'reason: "%s"' % str(e)

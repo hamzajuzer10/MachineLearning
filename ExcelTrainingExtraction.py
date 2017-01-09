@@ -3,13 +3,19 @@
 
 from xlrd import open_workbook
 import constants
+import sys
 
 
 #Open excel book
-print 'opening MachineLearningSummaryWorkbook...(this can take a while)'
-book = open_workbook(constants.workbook_name)
+print 'opening Machine Learning Training Workbook...(this can take a while)'
+try:
+    book = open_workbook(constants.training_workbook_name)
+except:
+    print 'unable to find or open training workbook...'
+    print 'program is exiting...'
+    sys.exit(0)
 
-print 'extracting classified training and test data from MachineLearningSummaryWorkbook...'
+print 'extracting classified training and test data from Machine Learning Workbook...'
 
 #Extract training and test data from the Machine Learning Summary Excel Spreadsheet
 #Open excel sheet
@@ -25,6 +31,4 @@ for row_index in xrange(1, sheet.nrows):
          for col_index in xrange(sheet.ncols)}
     dict_list.append(d)
 
-#Extract actual data from Machine Learning Summary Excel Spreadsheet - TODO
 
-print 'extracting unclassified data from MachineLearningSummaryWorkbook...'
