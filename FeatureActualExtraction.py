@@ -30,7 +30,7 @@ print 'No. of actual data samples: ', len(actual_dict_list)
 # Extract actual features(non-text)
 # Ensure that features are cleansed and missing values are imputed - TODO
 
-print 'loading training features...'
+print 'loading actual features...'
 
 # check if directory containing trained classifier is specified
 if constants.directory == None:

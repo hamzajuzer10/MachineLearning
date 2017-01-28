@@ -445,19 +445,20 @@ def runClassification():
     from xlwt import easyxf
 
     start_row = 1  # 0 based (subtract 1 from excel row number)
-    start_col = 24
+    start_col = 23 # 0 based - corresponds to col X
 
     rb = open_workbook(constants.actual_workbook_name, formatting_info=True)
     wb = copy(rb)  # a writable copy (I can't read values out of this, only write to it)
-    w_sheet = wb.get_sheet(0)  # the sheet to write to within the writable copy
-
+    classification_sheet = wb.get_sheet(0)  # sheet with classification results
+    classifier_sheet = wb.get_sheet(1)  # sheet with machine learning classifier results
     for i in range(0,len(output)):
         for j in range(0,len(output[i])):
 
             row_index = start_row+j
             col_index = start_col+i
-            w_sheet.write(row_index, col_index, output[i][j])
+            classification_sheet.write(row_index, col_index, output[i][j])
 
+    classifier_sheet.write(0,0,constants.directory)
     wb.save(constants.actual_workbook_name)
 
     print 'completed writing to Machine Learning Actual Workbook...'

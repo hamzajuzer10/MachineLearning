@@ -8,14 +8,14 @@ training_workbook_name = 'MachineLearningTraining.xlsm'
 training_sheet_name = 'Raw'
 
 #Machine Learning Actual Workbook
-actual_workbook_name = 'MachineLearningActual.xls'
+actual_workbook_name = 'Classification/MachineLearningActual_2706groups.xls'
 actual_sheet_name = 'Raw'
 
 #Trained classifier directory
-directory='Outputs/DecisionTree_72%acc_TrainingSet_3136_2017-01-05'
+directory='Outputs/TrainingSet_7439_2017-01-13_17h45m'
 
 #Run type ('training','classification')
-run_type = 'training'
+run_type = 'classification'
 
 #Training Features for each CIA
 #Feature descriptions
@@ -49,7 +49,7 @@ nValues_feature = {'AppInstLvl4BusOrg':11,
                     'RiskFactor07':4,
                     'RiskFactor08':2,
                     'Category':76,
-                    'ClassOwner':12,
+                    'ClassOwner':13,
                     'C-High':2,
                     'I-High':2,
                     'A-High':2}
