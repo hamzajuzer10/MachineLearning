@@ -9,7 +9,7 @@ import os
 import datetime
 from time import time
 
-def runTrainingAndTesting(classifier,save,param_grid):
+def runTrainingAndTesting(classifier,save,param_grid,meta):
 
     import FeatureTrainingPreprocessing
     from sklearn.metrics import accuracy_score
@@ -21,6 +21,9 @@ def runTrainingAndTesting(classifier,save,param_grid):
     from sklearn.neighbors import KNeighborsClassifier
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.ensemble import AdaBoostClassifier
+
+    if meta:
+        print 'training L1 classifier...'
 
     # Run training
     t0 = time()
@@ -89,10 +92,18 @@ def runTrainingAndTesting(classifier,save,param_grid):
 
     nb_training_time = round(time()-t0,3)
 
-    print 'training complete: ',nb_training_time, 's'
+    if meta:
+        print 'L1 training complete: ',nb_training_time, 's'
+        print 'computing test and train prediction results for L1 classifier...'
+    else:
+        print 'training complete: ', nb_training_time, 's'
 
     if constants.train_test_split != 1.0:
-        print 'running test prediction on classifier...'
+
+        if meta:
+            print 'running test prediction on L1 classifier...'
+        else:
+            print 'running test prediction on classifier...'
 
         #compute test results
         FLconf_pred = FLconf_clf.predict(FeatureTrainingPreprocessing.FLtransConfFeaturesNonTextTest)
@@ -108,10 +119,10 @@ def runTrainingAndTesting(classifier,save,param_grid):
         RPavail_pred = RPavail_clf.predict(FeatureTrainingPreprocessing.RPtransAvailFeaturesNonTextTest)
         RGavail_pred = RGavail_clf.predict(FeatureTrainingPreprocessing.RGtransAvailFeaturesNonTextTest)
 
-        nb_pred_time = round(time()-t0,3) - nb_training_time
-        print 'prediction complete: ',nb_pred_time, 's'
 
-        #compute accuracy
+        print 'test prediction complete...'
+
+        #compute test accuracy
         classifier_acc=[]
         classifier_acc.append(accuracy_score(FLconf_pred, FeatureTrainingPreprocessing.transLabelsTest[0]))
         classifier_acc.append(accuracy_score(CDconf_pred, FeatureTrainingPreprocessing.transLabelsTest[1]))
@@ -126,6 +137,7 @@ def runTrainingAndTesting(classifier,save,param_grid):
         classifier_acc.append(accuracy_score(RPavail_pred, FeatureTrainingPreprocessing.transLabelsTest[10]))
         classifier_acc.append(accuracy_score(RGavail_pred, FeatureTrainingPreprocessing.transLabelsTest[11]))
 
+        print 'Calculating prediction accuracy for test set...'
         print 'FL confidentiality prediction accuracy: ', classifier_acc[0]
         print 'CD confidentiality prediction accuracy: ', classifier_acc[1]
         print 'RP confidentiality prediction accuracy: ', classifier_acc[2]
@@ -138,7 +150,95 @@ def runTrainingAndTesting(classifier,save,param_grid):
         print 'CD availability prediction accuracy: ', classifier_acc[9]
         print 'RP availability prediction accuracy: ', classifier_acc[10]
         print 'RG availability prediction accuracy: ', classifier_acc[11]
-        print 'Overall accuracy: ', np.mean(classifier_acc)
+        print 'Overall test accuracy: ', np.mean(classifier_acc)
+
+    if meta:
+        print 'running training prediction on L1 classifier...'
+    else:
+        print 'running training prediction on classifier...'
+
+    # computing train results for bias/variance score
+    FLconf_trpred = FLconf_clf.predict(FeatureTrainingPreprocessing.FLtransConfFeaturesNonTextTrain)
+    CDconf_trpred = CDconf_clf.predict(FeatureTrainingPreprocessing.CDtransConfFeaturesNonTextTrain)
+    RPconf_trpred = RPconf_clf.predict(FeatureTrainingPreprocessing.RPtransConfFeaturesNonTextTrain)
+    RGconf_trpred = RGconf_clf.predict(FeatureTrainingPreprocessing.RGtransConfFeaturesNonTextTrain)
+    FLint_trpred = FLint_clf.predict(FeatureTrainingPreprocessing.FLtransIntFeaturesNonTextTrain)
+    CDint_trpred = CDint_clf.predict(FeatureTrainingPreprocessing.CDtransIntFeaturesNonTextTrain)
+    RPint_trpred = RPint_clf.predict(FeatureTrainingPreprocessing.RPtransIntFeaturesNonTextTrain)
+    RGint_trpred = RGint_clf.predict(FeatureTrainingPreprocessing.RGtransIntFeaturesNonTextTrain)
+    FLavail_trpred = FLavail_clf.predict(FeatureTrainingPreprocessing.FLtransAvailFeaturesNonTextTrain)
+    CDavail_trpred = CDavail_clf.predict(FeatureTrainingPreprocessing.CDtransAvailFeaturesNonTextTrain)
+    RPavail_trpred = RPavail_clf.predict(FeatureTrainingPreprocessing.RPtransAvailFeaturesNonTextTrain)
+    RGavail_trpred = RGavail_clf.predict(FeatureTrainingPreprocessing.RGtransAvailFeaturesNonTextTrain)
+
+    print 'training prediction complete...'
+
+    # compute train accuracy
+    classifier_tacc = []
+    classifier_tacc.append(accuracy_score(FLconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[0]))
+    classifier_tacc.append(accuracy_score(CDconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[1]))
+    classifier_tacc.append(accuracy_score(RPconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[2]))
+    classifier_tacc.append(accuracy_score(RGconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[3]))
+    classifier_tacc.append(accuracy_score(FLint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[4]))
+    classifier_tacc.append(accuracy_score(CDint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[5]))
+    classifier_tacc.append(accuracy_score(RPint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[6]))
+    classifier_tacc.append(accuracy_score(RGint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[7]))
+    classifier_tacc.append(accuracy_score(FLavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[8]))
+    classifier_tacc.append(accuracy_score(CDavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[9]))
+    classifier_tacc.append(accuracy_score(RPavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[10]))
+    classifier_tacc.append(accuracy_score(RGavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[11]))
+
+    print 'Calculating prediction accuracy for training set...'
+    print 'FL confidentiality prediction accuracy: ', classifier_tacc[0]
+    print 'CD confidentiality prediction accuracy: ', classifier_tacc[1]
+    print 'RP confidentiality prediction accuracy: ', classifier_tacc[2]
+    print 'RG confidentiality prediction accuracy: ', classifier_tacc[3]
+    print 'FL integrity prediction accuracy: ', classifier_tacc[4]
+    print 'CD integrity prediction accuracy: ', classifier_tacc[5]
+    print 'RP integrity prediction accuracy: ', classifier_tacc[6]
+    print 'RG integrity prediction accuracy: ', classifier_tacc[7]
+    print 'FL availability prediction accuracy: ', classifier_tacc[8]
+    print 'CD availability prediction accuracy: ', classifier_tacc[9]
+    print 'RP availability prediction accuracy: ', classifier_tacc[10]
+    print 'RG availability prediction accuracy: ', classifier_tacc[11]
+    print 'Overall train accuracy: ', np.mean(classifier_tacc)
+
+
+    if meta:
+
+        print 'training L2 classifier...'
+
+        #create predicted array of test results
+        mconf_pred = []
+        mconf_pred.append(FLconf_pred)
+        mconf_pred.append(CDconf_pred)
+        mconf_pred.append(RPconf_pred)
+        mconf_pred.append(RGconf_pred)
+        mconf_pred.append(FLint_pred)
+        mconf_pred.append(CDint_pred)
+        mconf_pred.append(RPint_pred)
+        mconf_pred.append(RGint_pred)
+        mconf_pred.append(FLavail_pred)
+        mconf_pred.append(CDavail_pred)
+        mconf_pred.append(RPavail_pred)
+        mconf_pred.append(RGavail_pred)
+
+
+        # create predicted array of training results
+        mconf_trpred = []
+        mconf_trpred.append(FLconf_pred)
+        mconf_trpred.append(CDconf_pred)
+        mconf_trpred.append(RPconf_pred)
+        mconf_trpred.append(RGconf_pred)
+        mconf_trpred.append(FLint_pred)
+        mconf_trpred.append(CDint_pred)
+        mconf_trpred.append(RPint_pred)
+        mconf_trpred.append(RGint_pred)
+        mconf_trpred.append(FLavail_pred)
+        mconf_trpred.append(CDavail_pred)
+        mconf_trpred.append(RPavail_pred)
+        mconf_trpred.append(RGavail_pred)
+
 
     if save:
         print 'saving training classifier data...'
@@ -230,35 +330,6 @@ def runTrainingAndTesting(classifier,save,param_grid):
         #save metrics
         from sklearn.metrics import classification_report
         from sklearn.metrics import confusion_matrix
-
-        #computing train results for bias/variance score
-        FLconf_trpred = FLconf_clf.predict(FeatureTrainingPreprocessing.FLtransConfFeaturesNonTextTrain)
-        CDconf_trpred = CDconf_clf.predict(FeatureTrainingPreprocessing.CDtransConfFeaturesNonTextTrain)
-        RPconf_trpred = RPconf_clf.predict(FeatureTrainingPreprocessing.RPtransConfFeaturesNonTextTrain)
-        RGconf_trpred = RGconf_clf.predict(FeatureTrainingPreprocessing.RGtransConfFeaturesNonTextTrain)
-        FLint_trpred = FLint_clf.predict(FeatureTrainingPreprocessing.FLtransIntFeaturesNonTextTrain)
-        CDint_trpred = CDint_clf.predict(FeatureTrainingPreprocessing.CDtransIntFeaturesNonTextTrain)
-        RPint_trpred = RPint_clf.predict(FeatureTrainingPreprocessing.RPtransIntFeaturesNonTextTrain)
-        RGint_trpred = RGint_clf.predict(FeatureTrainingPreprocessing.RGtransIntFeaturesNonTextTrain)
-        FLavail_trpred = FLavail_clf.predict(FeatureTrainingPreprocessing.FLtransAvailFeaturesNonTextTrain)
-        CDavail_trpred = CDavail_clf.predict(FeatureTrainingPreprocessing.CDtransAvailFeaturesNonTextTrain)
-        RPavail_trpred = RPavail_clf.predict(FeatureTrainingPreprocessing.RPtransAvailFeaturesNonTextTrain)
-        RGavail_trpred = RGavail_clf.predict(FeatureTrainingPreprocessing.RGtransAvailFeaturesNonTextTrain)
-
-        #compute train accuracy
-        classifier_tacc = []
-        classifier_tacc.append(accuracy_score(FLconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[0]))
-        classifier_tacc.append(accuracy_score(CDconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[1]))
-        classifier_tacc.append(accuracy_score(RPconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[2]))
-        classifier_tacc.append(accuracy_score(RGconf_trpred, FeatureTrainingPreprocessing.transLabelsTrain[3]))
-        classifier_tacc.append(accuracy_score(FLint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[4]))
-        classifier_tacc.append(accuracy_score(CDint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[5]))
-        classifier_tacc.append(accuracy_score(RPint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[6]))
-        classifier_tacc.append(accuracy_score(RGint_trpred, FeatureTrainingPreprocessing.transLabelsTrain[7]))
-        classifier_tacc.append(accuracy_score(FLavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[8]))
-        classifier_tacc.append(accuracy_score(CDavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[9]))
-        classifier_tacc.append(accuracy_score(RPavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[10]))
-        classifier_tacc.append(accuracy_score(RGavail_trpred, FeatureTrainingPreprocessing.transLabelsTrain[11]))
 
         #write to file
         text_file = open(outputMetrics, "w+")
