@@ -168,7 +168,8 @@ def nonTextFeature_transform(featureList):
               "Warren Moore":9,
               "Hamza Juzer":10,
               "Caroline Hicks":11,
-              "Raam Chandrasekharan": 12}
+              "Raam Chandrasekharan": 12,
+              'VH': 3, 'H': 2, 'M': 1, 'L': 0}
 
     try:
         transformedList = [[lookup[featureList[i][j]] for j in range(0,len(featureList[i]))] for i in range(0,len(featureList))]

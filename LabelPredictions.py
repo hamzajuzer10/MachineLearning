@@ -21,6 +21,7 @@ def runTrainingAndTesting(classifier,save,param_grid):
     from sklearn.neighbors import KNeighborsClassifier
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.ensemble import AdaBoostClassifier
+    from sklearn.linear_model import LogisticRegression
 
     # Run training
     t0 = time()
@@ -52,6 +53,10 @@ def runTrainingAndTesting(classifier,save,param_grid):
         elif classifier_t == 'AdaBoostDT':
             print 'training AdaBoost Decision Tree classifier on %s...' %label_t
             label_clf[label_t] = GridSearchCV(AdaBoostClassifier(base_estimator = DecisionTreeClassifier()),param_grid[label_t])
+
+        elif classifier_t == 'LogisticRegression':
+            print 'training Logistic Regression classifier on %s...' %label_t
+            label_clf[label_t] = GridSearchCV(LogisticRegression(),param_grid[label_t])
 
         else:
             print 'no classifier selected...'

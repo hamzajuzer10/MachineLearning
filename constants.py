@@ -15,7 +15,7 @@ actual_sheet_name = 'Raw'
 directory='Outputs/TrainingSet_7439_2017-01-13_17h45m'
 
 #Run type ('training','classification')
-run_type = 'classification'
+run_type = 'training'
 
 #Training Features for each CIA
 #Feature descriptions
@@ -92,17 +92,16 @@ nNonText_feature = {'FLconfidentialityNonText_features':('AppInstLvl4BusOrg','Re
                                   'RiskFactor05','RiskFactor06','RiskFactor07','RiskFactor08','Category','ClassOwner','C-High',
                                      'I-High','A-High')}
 
-
 #Labels for each CIA
 labels = ('C-FinLoss','C-CusD','C-RepLoss','C-RegLoss','I-FinLoss','I-CusD','I-RepLoss','I-RegLoss','A-FinLoss','A-CusD','A-RepLoss','A-RegLoss')
 
 #Split of training and test sets (0<value<=1)
-train_test_split = 1.0
+train_test_split = 0.8
 
 #dimensionality reduction % on CIA features
 
 #classifier used - options
-#(GaussianNaiveBayes, SVM, DecisionTree, KNN, RandomForest, AdaBoostDT)
+#(GaussianNaiveBayes, SVM, DecisionTree, KNN, RandomForest, AdaBoostDT, LogisticRegression)
 classifier = {'FLconfidentiality':'RandomForest',
               'CDconfidentiality':'AdaBoostDT',
               'RPconfidentiality':'AdaBoostDT',
@@ -116,9 +115,8 @@ classifier = {'FLconfidentiality':'RandomForest',
               'RPavailability':'RandomForest',
               'RGavailability':'RandomForest'}
 
-
 # Should the training output be saved?
-save = True
+save = False
 
 #classifier parameters used
 #Examples -
@@ -145,6 +143,9 @@ save = True
 
 #Adaboost with DecisionTrees
 #param_grid = {'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[2, 5, 10, 20], 'n_estimators': [30, 40, 50]}
+
+#Logistic Regression
+#param_grid = {'C': [0.0001, 0.001, 0.01, 0.1, 1.0], 'max_iter': [100, 200], 'solver': ['newton-cg','sag'], 'n_jobs':[-1]}
 
 param_grid = {'FLconfidentiality':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]},
               'CDconfidentiality':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [50, 60]},
