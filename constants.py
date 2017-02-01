@@ -15,7 +15,7 @@ actual_sheet_name = 'Raw'
 directory='Outputs/TrainingSet_7439_2017-01-13_17h45m'
 
 #Run type ('training','classification')
-run_type = 'classification'
+run_type = 'training'
 
 #Training Features for each CIA
 #Feature descriptions
@@ -107,8 +107,8 @@ nNonText_feature = {'FLconfidentialityNonText_features':('AppInstLvl4BusOrg','Re
 
 
 
-#classifier used - options
-#(GaussianNaiveBayes, SVM, DecisionTree, KNN, RandomForest, AdaBoostDT)
+#L1 classifier used
+#Options are: GaussianNaiveBayes, SVM, DecisionTree, KNN, RandomForest, AdaBoostDT
 classifier = {'FLconfidentiality':'RandomForest',
               'CDconfidentiality':'AdaBoostDT',
               'RPconfidentiality':'AdaBoostDT',
@@ -122,18 +122,17 @@ classifier = {'FLconfidentiality':'RandomForest',
               'RPavailability':'RandomForest',
               'RGavailability':'RandomForest'}
 
-#classifier parameters used
-#Examples -
-#Gaussian Bayes:
-#None
+#L1 classifier parameters used
+#Options are:
+#Gaussian Bayes -
 
-#Decision Tree:
+#Decision Tree -
 # param_grid = [
 #   {'min_samples_split': [2, 5, 10, 20], 'criterion': ['gini']},
 #   {'min_samples_split': [2, 5, 10, 20], 'criterion': ['entropy']},
 #  ]
 
-#RandomForest
+#RandomForest -
 #param_grid = {'n_estimators': [5, 10, 15], 'min_samples_split': [2, 5, 10, 20], 'min_samples_leaf': [1,5,10], 'n_jobs':[-1]}
 
 #SVM
@@ -142,10 +141,10 @@ classifier = {'FLconfidentiality':'RandomForest',
 #   {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
 #  ]
 
-#Nearest Neighbors
+#Nearest Neighbors -
 # param_grid = {'n_neighbors': [5, 10, 15], 'weights': ['uniform','distance'], 'p':[1,2], 'n_jobs':[-1]}
 
-#Adaboost with DecisionTrees
+#Adaboost with DecisionTrees -
 #param_grid = {'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[2, 5, 10, 20], 'n_estimators': [30, 40, 50]}
 
 param_grid = {'FLconfidentiality':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]},
@@ -164,7 +163,7 @@ param_grid = {'FLconfidentiality':{'n_estimators': [15,20], 'min_samples_split':
 
 
 #L2 meta classifier
-meta = False
+meta = True
 
 
 
@@ -231,12 +230,65 @@ nMetaMetaNonText_feature = {'FLconfidentialityNonText_features':('C-FinLossPred'
                     'RGavailabilityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
                                      'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred')}
 
+#L1 classifier used
+#Options are: GaussianNaiveBayes, SVM, DecisionTree, KNN, RandomForest, AdaBoostDT
+meta_classifier = {'FLconfidentiality':'RandomForest',
+              'CDconfidentiality':'AdaBoostDT',
+              'RPconfidentiality':'AdaBoostDT',
+              'RGconfidentiality':'AdaBoostDT',
+              'FLintegrity':'AdaBoostDT',
+              'CDintegrity':'AdaBoostDT',
+              'RPintegrity':'RandomForest',
+              'RGintegrity':'AdaBoostDT',
+              'FLavailability':'RandomForest',
+              'CDavailability':'AdaBoostDT',
+              'RPavailability':'RandomForest',
+              'RGavailability':'RandomForest'}
+
+#L2 classifier parameters used
+#Options are:
+#Gaussian Bayes -
+
+#Decision Tree -
+# param_grid = [
+#   {'min_samples_split': [2, 5, 10, 20], 'criterion': ['gini']},
+#   {'min_samples_split': [2, 5, 10, 20], 'criterion': ['entropy']},
+#  ]
+
+#RandomForest -
+#param_grid = {'n_estimators': [5, 10, 15], 'min_samples_split': [2, 5, 10, 20], 'min_samples_leaf': [1,5,10], 'n_jobs':[-1]}
+
+#SVM
+# param_grid = [
+#   {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+#   {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+#  ]
+
+#Nearest Neighbors -
+# param_grid = {'n_neighbors': [5, 10, 15], 'weights': ['uniform','distance'], 'p':[1,2], 'n_jobs':[-1]}
+
+#Adaboost with DecisionTrees -
+#param_grid = {'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[2, 5, 10, 20], 'n_estimators': [30, 40, 50]}
+
+meta_param_grid = {'FLconfidentiality':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]},
+              'CDconfidentiality':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [50, 60]},
+              'RPconfidentiality':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [50, 60]},
+              'RGconfidentiality':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [35, 40, 45]},
+              'FLintegrity':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [50, 60]},
+              'CDintegrity':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [50, 60]},
+              'RPintegrity':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]},
+              'RGintegrity':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[5], 'n_estimators': [35, 40, 45]},
+              'FLavailability':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]},
+              'CDavailability':{'base_estimator__criterion' : ['gini'], 'base_estimator__min_samples_split' :[2], 'n_estimators': [50, 60]},
+              'RPavailability':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]},
+              'RGavailability':{'n_estimators': [15,20], 'min_samples_split': [2], 'min_samples_leaf': [1], 'n_jobs':[-1]}}
+
 
 #Labels for each CIA
 labels = ('C-FinLoss','C-CusD','C-RepLoss','C-RegLoss','I-FinLoss','I-CusD','I-RepLoss','I-RegLoss','A-FinLoss','A-CusD','A-RepLoss','A-RegLoss')
 
 #Split of training and test sets (0<value<=1)
-train_test_split = 1.0
+train_test_split = 0.8
 
 # Should the training output be saved?
 save = True

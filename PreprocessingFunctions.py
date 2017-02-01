@@ -36,6 +36,39 @@ def label_inv_transform(labelList):
 
     return np.array(transformedList)
 
+def metaNonTextFeature_combine(featureList, predictedLabelList, tag):
+    "Combine non-text features with predicted labels for the meta algorithm"
+
+    lookup = {'C-FinLossPred': 0,
+              'C-CusDPred': 1,
+              'C-RepLossPred': 2,
+              'C-RegLossPred': 3,
+              'I-FinLossPred': 4,
+              'I-CusDPred': 5,
+              'I-RepLossPred': 6,
+              'I-RegLoss': 7,
+              'A-FinLossPred': 8,
+              'A-CusDPred': 9,
+              'A-RepLossPred': 10,
+              'A-RegLossPred': 11}
+
+    newFeatureList = []
+
+    for sample in featureList:
+        for label in constants.nMetaMetaNonText_feature[tag]:
+            try:
+                index = lookup[label]
+                sample.append(predictedLabelList[index])
+            except KeyError, e:
+                print 'unexpected tags found...'
+                print 'reason: "%s"' % str(e)
+                print 'program is exiting...'
+                sys.exit(0)
+
+        newFeatureList.append(sample)
+
+    return np.array(newFeatureList)
+
 def nonTextFeature_transform(featureList):
     "Transform function takes in the list of features and converts them to integer representation"
 

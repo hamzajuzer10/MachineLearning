@@ -2,8 +2,8 @@
 
 #Prepocess labels, non-text and text features
 
-import FeatureTrainingExtraction
 import constants
+import FeatureTrainingExtraction
 from PreprocessingFunctions import label_transform, label_inv_transform, nonTextFeature_transform, nonTextFeature_nvalues, checkLabelsNFeatures
 from sklearn.preprocessing import OneHotEncoder
 
@@ -149,6 +149,3 @@ if constants.train_test_split != 1.0:
     checkLabelsNFeatures(CDtransAvailFeaturesNonTextTest,transLabelsTest[9],'CD availability testing')
     checkLabelsNFeatures(RPtransAvailFeaturesNonTextTest,transLabelsTest[10],'RP availability testing')
     checkLabelsNFeatures(RGtransAvailFeaturesNonTextTest,transLabelsTest[11],'RG availability testing')
-
-
-#Features - text - TODO

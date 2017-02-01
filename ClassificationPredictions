@@ -1,0 +1,115 @@
+import numpy as np
+import constants
+import sys
+import os
+import datetime
+from time import time
+
+import FeatureActualPreprocessing
+
+# Run classification time
+t0 = time()
+
+#load classifier
+cl_1 = constants.directory + str('/FLconf.pkl')
+cl_2 = constants.directory + str('/CDconf.pkl')
+cl_3 = constants.directory + str('/RPconf.pkl')
+cl_4 = constants.directory + str('/RGconf.pkl')
+cl_5 = constants.directory + str('/FLint.pkl')
+cl_6 = constants.directory + str('/CDint.pkl')
+cl_7 = constants.directory + str('/RPint.pkl')
+cl_8 = constants.directory + str('/RGint.pkl')
+cl_9 = constants.directory + str('/FLavail.pkl')
+cl_10 = constants.directory + str('/CDavail.pkl')
+cl_11 = constants.directory + str('/RPavail.pkl')
+cl_12 = constants.directory + str('/RGavail.pkl')
+
+from sklearn.externals import joblib
+FLconf_clf = joblib.load(cl_1)
+CDconf_clf = joblib.load(cl_2)
+RPconf_clf = joblib.load(cl_3)
+RGconf_clf = joblib.load(cl_4)
+FLint_clf = joblib.load(cl_5)
+CDint_clf = joblib.load(cl_6)
+RPint_clf = joblib.load(cl_7)
+RGint_clf = joblib.load(cl_8)
+FLavail_clf = joblib.load(cl_9)
+CDavail_clf = joblib.load(cl_10)
+RPavail_clf = joblib.load(cl_11)
+RGavail_clf = joblib.load(cl_12)
+
+print 'running classification using classifier...'
+
+# compute results
+FLconf_pred = FLconf_clf.predict(FeatureActualPreprocessing.FLtransConfFeaturesNonTextActual)
+CDconf_pred = CDconf_clf.predict(FeatureActualPreprocessing.CDtransConfFeaturesNonTextActual)
+RPconf_pred = RPconf_clf.predict(FeatureActualPreprocessing.RPtransConfFeaturesNonTextActual)
+RGconf_pred = RGconf_clf.predict(FeatureActualPreprocessing.RGtransConfFeaturesNonTextActual)
+FLint_pred = FLint_clf.predict(FeatureActualPreprocessing.FLtransIntFeaturesNonTextActual)
+CDint_pred = CDint_clf.predict(FeatureActualPreprocessing.CDtransIntFeaturesNonTextActual)
+RPint_pred = RPint_clf.predict(FeatureActualPreprocessing.RPtransIntFeaturesNonTextActual)
+RGint_pred = RGint_clf.predict(FeatureActualPreprocessing.RGtransIntFeaturesNonTextActual)
+FLavail_pred = FLavail_clf.predict(FeatureActualPreprocessing.FLtransAvailFeaturesNonTextActual)
+CDavail_pred = CDavail_clf.predict(FeatureActualPreprocessing.CDtransAvailFeaturesNonTextActual)
+RPavail_pred = RPavail_clf.predict(FeatureActualPreprocessing.RPtransAvailFeaturesNonTextActual)
+RGavail_pred = RGavail_clf.predict(FeatureActualPreprocessing.RGtransAvailFeaturesNonTextActual)
+
+nb_pred_time = round(time() - t0, 3)
+print 'classification complete: ', nb_pred_time, 's'
+
+#output classification results in excel
+print 'writing results to Machine Learning Actual Workbook...(this can take a while)'
+
+from PreprocessingFunctions import label_inv_transform
+
+FLconf_val = label_inv_transform(FLconf_pred)
+CDconf_val = label_inv_transform(CDconf_pred)
+RPconf_val = label_inv_transform(RPconf_pred)
+RGconf_val = label_inv_transform(RGconf_pred)
+FLint_val = label_inv_transform(FLint_pred)
+CDint_val = label_inv_transform(CDint_pred)
+RPint_val = label_inv_transform(RPint_pred)
+RGint_val = label_inv_transform(RGint_pred)
+FLavail_val = label_inv_transform(FLavail_pred)
+CDavail_val = label_inv_transform(CDavail_pred)
+RPavail_val = label_inv_transform(RPavail_pred)
+RGavail_val = label_inv_transform(RGavail_pred)
+
+
+output = []
+output.append(FLconf_val)
+output.append(CDconf_val)
+output.append(RPconf_val)
+output.append(RGconf_val)
+output.append(FLint_val)
+output.append(CDint_val)
+output.append(RPint_val)
+output.append(RGint_val)
+output.append(FLavail_val)
+output.append(CDavail_val)
+output.append(RPavail_val)
+output.append(RGavail_val)
+
+#write to excel file
+from xlutils.copy import copy
+from xlrd import open_workbook
+from xlwt import easyxf
+
+start_row = 1  # 0 based (subtract 1 from excel row number)
+start_col = 23 # 0 based - corresponds to col X
+
+rb = open_workbook(constants.actual_workbook_name, formatting_info=True)
+wb = copy(rb)  # a writable copy (I can't read values out of this, only write to it)
+classification_sheet = wb.get_sheet(0)  # sheet with classification results
+classifier_sheet = wb.get_sheet(1)  # sheet with machine learning classifier results
+for i in range(0,len(output)):
+    for j in range(0,len(output[i])):
+
+        row_index = start_row+j
+        col_index = start_col+i
+        classification_sheet.write(row_index, col_index, output[i][j])
+
+classifier_sheet.write(0,0,constants.directory)
+wb.save(constants.actual_workbook_name)
+
+print 'completed writing to Machine Learning Actual Workbook...'
