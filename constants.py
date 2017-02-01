@@ -8,14 +8,14 @@ training_workbook_name = 'MachineLearningTraining.xlsm'
 training_sheet_name = 'Raw'
 
 #Machine Learning Actual Workbook
-actual_workbook_name = 'Classification/MachineLearningActual_2706groups.xls'
+actual_workbook_name = 'Classification/MachineLearningActual_1599groups.xls'
 actual_sheet_name = 'Raw'
 
 #Trained classifier directory
 directory='Outputs/TrainingSet_7439_2017-01-13_17h45m'
 
 #Run type ('training','classification')
-run_type = 'training'
+run_type = 'classification'
 
 #Training Features for each CIA
 #Feature descriptions
