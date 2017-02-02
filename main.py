@@ -1,16 +1,18 @@
 #!/usr/bin/python
 
 import constants
+import TrainingAndTesting
 
 
 #run code here
 if constants.meta:
     if constants.run_type == 'training':
-        import TrainingAndTesting
+        mconf_pred, mconf_trpred = TrainingAndTesting.TrainAndTest()
+
     elif constants.run_type == 'classification':
         import ClassificationPredictions
 else:
     if constants.run_type == 'training':
-        import MetaTrainingAndTesting
+        TrainAndTest()
     elif constants.run_type == 'classification':
         import ClassificationPredictions
