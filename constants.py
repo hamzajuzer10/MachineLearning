@@ -15,7 +15,7 @@ actual_sheet_name = 'Raw'
 directory='Outputs/TrainingSet_7439_2017-01-13_17h45m'
 
 #Run type ('training','classification')
-run_type = 'classification'
+run_type = 'training'
 
 #Training Features for each CIA
 #Feature descriptions
@@ -49,7 +49,7 @@ nValues_feature = {'AppInstLvl4BusOrg':11,
                     'RiskFactor07':4,
                     'RiskFactor08':2,
                     'Category':76,
-                    'ClassOwner':13,
+                    'ClassOwner':14,
                     'C-High':2,
                     'I-High':2,
                     'A-High':2}
@@ -116,7 +116,7 @@ classifier = {'FLconfidentiality':'RandomForest',
               'RGavailability':'RandomForest'}
 
 # Should the training output be saved?
-save = False
+save = True
 
 #classifier parameters used
 #Examples -

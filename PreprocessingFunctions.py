@@ -169,6 +169,7 @@ def nonTextFeature_transform(featureList):
               "Hamza Juzer":10,
               "Caroline Hicks":11,
               "Raam Chandrasekharan": 12,
+              "Nishanth Vishwanath":13,
               'VH': 3, 'H': 2, 'M': 1, 'L': 0}
 
     try:
