@@ -50,6 +50,7 @@ def TrainAndTest():
 
         elif classifier_t == 'AdaBoostDT':
             from sklearn.ensemble import AdaBoostClassifier
+            from sklearn.tree import DecisionTreeClassifier
             label_clf[label_t] = GridSearchCV(AdaBoostClassifier(base_estimator = DecisionTreeClassifier()),constants.param_grid[label_t])
 
         else:
@@ -224,20 +225,45 @@ def TrainAndTest():
 
 
     if constants.save:
-        print 'saving training classifier data...'
+        if constants.meta:
+            print 'saving L1 training classifier data...'
+        else:
+            print 'saving training classifier data...'
 
         from sklearn.externals import joblib
-        directory = 'Outputs/'
-        if constants.train_test_split != 1.0:
-            directory += str(int(np.mean(classifier_acc)*100))
-            directory += '%_acc_'
-        directory += 'TrainingSet_'
-        directory += str(len(FeatureTrainingPreprocessing.FeatureTrainingExtraction.training_dict_list))
-        directory += '_'
-        directory += str(datetime.date.today())
-        directory += '_'
-        directory += str('%02dh' %datetime.datetime.now().time().hour)
-        directory += str('%02dm' % datetime.datetime.now().time().minute)
+        core_directory = ''
+        if constants.meta:
+            core_directory = 'Outputs/Meta/'
+            core_directory += 'TrainingSet_'
+            core_directory += str(len(FeatureTrainingPreprocessing.FeatureTrainingExtraction.training_dict_list))
+            core_directory += '_'
+            core_directory += str(datetime.date.today())
+            core_directory += '_'
+            core_directory += str('%02dh' % datetime.datetime.now().time().hour)
+            core_directory += str('%02dm' % datetime.datetime.now().time().minute)
+            directory = core_directory + '/'
+            directory += 'L1_classifier'
+
+            if constants.train_test_split != 1.0:
+                directory += '_'
+                directory += str(int(np.mean(classifier_acc) * 100))
+                directory += '%_acc'
+
+        else:
+            directory = 'Outputs/Non-meta/'
+            directory += 'TrainingSet_'
+            directory += str(len(FeatureTrainingPreprocessing.FeatureTrainingExtraction.training_dict_list))
+            directory += '_'
+            directory += str(datetime.date.today())
+            directory += '_'
+            directory += str('%02dh' % datetime.datetime.now().time().hour)
+            directory += str('%02dm_' % datetime.datetime.now().time().minute)
+            directory += 'classifier'
+
+            if constants.train_test_split != 1.0:
+                directory += '_'
+                directory += str(int(np.mean(classifier_acc) * 100))
+                directory += '%_acc'
 
 
         #make directory if one doesnt exist
@@ -400,7 +426,11 @@ def TrainAndTest():
                                                               target_names=['L', 'M', 'H', 'VH']))
 
         text_file.close()
-        print 'saving training classifier data complete...'
+
+        if constants.meta:
+            print 'saving L1 training classifier data complete...'
+        else:
+            print 'saving training classifier data complete...'
 
     # create predicted array of train and test results
     mconf_pred = []
@@ -423,20 +453,20 @@ def TrainAndTest():
         mconf_pred.append(RGavail_pred)
 
         #train
-        mconf_trpred.append(FLconf_pred)
-        mconf_trpred.append(CDconf_pred)
-        mconf_trpred.append(RPconf_pred)
-        mconf_trpred.append(RGconf_pred)
-        mconf_trpred.append(FLint_pred)
-        mconf_trpred.append(CDint_pred)
-        mconf_trpred.append(RPint_pred)
-        mconf_trpred.append(RGint_pred)
-        mconf_trpred.append(FLavail_pred)
-        mconf_trpred.append(CDavail_pred)
-        mconf_trpred.append(RPavail_pred)
-        mconf_trpred.append(RGavail_pred)
+        mconf_trpred.append(FLconf_trpred)
+        mconf_trpred.append(CDconf_trpred)
+        mconf_trpred.append(RPconf_trpred)
+        mconf_trpred.append(RGconf_trpred)
+        mconf_trpred.append(FLint_trpred)
+        mconf_trpred.append(CDint_trpred)
+        mconf_trpred.append(RPint_trpred)
+        mconf_trpred.append(RGint_trpred)
+        mconf_trpred.append(FLavail_trpred)
+        mconf_trpred.append(CDavail_trpred)
+        mconf_trpred.append(RPavail_trpred)
+        mconf_trpred.append(RGavail_trpred)
 
-    return [mconf_pred,mconf_trpred]
+    return mconf_pred,mconf_trpred, core_directory
 
 
 

@@ -52,13 +52,21 @@ def metaNonTextFeature_combine(featureList, predictedLabelList, tag):
               'A-RepLossPred': 10,
               'A-RegLossPred': 11}
 
+
+    #check that feature list list is numpy arrays
+    if 'numpy' not in str(type(featureList)):
+        print 'unexpected array type found in meta feature list...'
+        print 'program is exiting...'
+        sys.exit(0)
+
     newFeatureList = []
 
-    for sample in featureList:
+    for i in range(len(featureList)):
+        sample = featureList[i]
         for label in constants.nMetaMetaNonText_feature[tag]:
             try:
                 index = lookup[label]
-                sample.append(predictedLabelList[index])
+                sample = np.append(sample, predictedLabelList[index][i])
             except KeyError, e:
                 print 'unexpected tags found...'
                 print 'reason: "%s"' % str(e)

@@ -205,30 +205,18 @@ nMetaBaseNonText_feature = {'FLconfidentialityNonText_features':('AppInstLvl4Bus
                                   'RiskFactor05','RiskFactor06','RiskFactor07','RiskFactor08','Category','ClassOwner','C-High',
                                      'I-High','A-High')}
 
-nMetaMetaNonText_feature = {'FLconfidentialityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'CDconfidentialityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'RPconfidentialityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'RGconfidentialityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'FLintegrityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'CDintegrityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'RPintegrityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'RGintegrityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'FLavailabilityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'CDavailabilityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'RPavailabilityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred'),
-                    'RGavailabilityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred','C-RegLossPred','I-FinLossPred','I-CusDPred','I-RepLossPred','I-RegLoss',
-                                     'A-FinLossPred','A-CusDPred','A-RepLossPred','A-RegLossPred')}
+nMetaMetaNonText_feature = {'FLconfidentialityNonText_features':('C-CusDPred','C-RepLossPred','C-RegLossPred'),
+                    'CDconfidentialityNonText_features':('C-FinLossPred','C-RepLossPred','C-RegLossPred'),
+                    'RPconfidentialityNonText_features':('C-FinLossPred','C-CusDPred','C-RegLossPred'),
+                    'RGconfidentialityNonText_features':('C-FinLossPred','C-CusDPred','C-RepLossPred'),
+                    'FLintegrityNonText_features':('I-CusDPred','I-RepLossPred','I-RegLoss'),
+                    'CDintegrityNonText_features':('I-FinLossPred','I-RepLossPred','I-RegLoss'),
+                    'RPintegrityNonText_features':('I-FinLossPred','I-CusDPred','I-RegLoss'),
+                    'RGintegrityNonText_features':('I-FinLossPred','I-CusDPred','I-RepLossPred'),
+                    'FLavailabilityNonText_features':('A-CusDPred','A-RepLossPred','A-RegLossPred'),
+                    'CDavailabilityNonText_features':('A-FinLossPred','A-RepLossPred','A-RegLossPred'),
+                    'RPavailabilityNonText_features':('A-FinLossPred','A-CusDPred','A-RegLossPred'),
+                    'RGavailabilityNonText_features':('A-FinLossPred','A-CusDPred','A-RepLossPred')}
 
 #L1 classifier used
 #Options are: GaussianNaiveBayes, SVM, DecisionTree, KNN, RandomForest, AdaBoostDT
